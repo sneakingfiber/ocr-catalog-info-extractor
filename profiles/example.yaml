@@ -1,0 +1,38 @@
+# Example profile for a hardware-tools catalog.
+# Copy this file and adapt it to your own catalog.
+#
+# Everything here is plain rules: no LLM, no network.
+
+# Appended to the product line (see line_format).
+brand: ACME
+
+# Page ranges -> value of the SECTION column. Pages are 1-indexed PDF pages.
+sections:
+  - { from_page: 1,  to_page: 60,  name: BUILDING }
+  - { from_page: 61, to_page: 200, name: SITE EQUIPMENT }
+default_section: ""          # used when a page matches no range
+
+# FIRST WORD of the product name -> CATEGORY.
+# Unknown first words fall back to the word itself, so the output is never empty.
+category_map:
+  TROWEL: MASON'S TOOLS
+  FLOAT: MASON'S TOOLS
+  SPATULA: SPATULAS
+  SCRAPER: SPATULAS
+  BRUSH: BRUSHES AND ROLLERS
+  ROLLER: BRUSHES AND ROLLERS
+  HAMMER: HAMMERS
+  MALLET: HAMMERS
+  LEVEL: LEVELS
+  SQUARE: MEASURING TOOLS
+  BUCKET: ACCESSORIES
+  GLOVE: ACCESSORIES
+
+# Regex (case-insensitive) searched in the product name block to detect a
+# product line, e.g. 'TROWEL ITALIAN STYLE\nWOODEN HANDLE - line "anchor"'.
+# Group 1 = the line name.
+line_pattern: '(?:line|linea|series)\s+["'']?([A-Za-z0-9\-]+)["'']?'
+
+# How PRODUCT LINE is built when line_pattern matches.
+# Placeholders: {category} {line} {brand}
+line_format: '{category} - LINE "{line}" {brand}'
